@@ -1,6 +1,7 @@
 import Header from "./components/Header/Header";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
+import Footer from "./components/footer/Footer";
 
 export default function RootLayout({ children }) {
   return (
@@ -9,6 +10,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
