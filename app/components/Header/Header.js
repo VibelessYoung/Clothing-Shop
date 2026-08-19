@@ -11,6 +11,7 @@ import {
   ArrowUpRight,
   ChevronDown,
 } from "lucide-react";
+import ThemeButton from "../ui/ThemeButton";
 
 const navItems = [
   {
@@ -153,7 +154,7 @@ export default function Header() {
 
             <div className="relative flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-black text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg dark:border-white/10 dark:bg-white dark:text-black">
               <span className="text-[11px] font-bold tracking-[-0.08em]">
-                C
+                <ChevronDown />
               </span>
             </div>
 
@@ -248,6 +249,7 @@ export default function Header() {
                 2
               </span>
             </button>
+            <ThemeButton />
 
             {/* Divider */}
 
