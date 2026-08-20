@@ -2,12 +2,54 @@
 
 import Link from "next/link";
 import { ArrowUpLeft, Heart, ShoppingBag } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const STORAGE_KEY = "amir_wishlist";
 
 export default function ProductCard({ product }) {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // بررسی وضعیت Wishlist هنگام لود شدن کارت
+  useEffect(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+      setIsFavorite(stored.includes(product.id));
+    } catch (error) {
+      console.error("Wishlist read error:", error);
+      setIsFavorite(false);
+    }
+  }, [product.id]);
+
+  // افزودن / حذف از Wishlist
+  const toggleWishlist = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+      let updated;
+
+      if (stored.includes(product.id)) {
+        // حذف
+        updated = stored.filter((id) => id !== product.id);
+      } else {
+        // اضافه کردن
+        updated = [...stored, product.id];
+      }
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+
+      setIsFavorite(updated.includes(product.id));
+
+      // اطلاع به سایر کامپوننت‌ها
+      window.dispatchEvent(new Event("wishlistUpdated"));
+    } catch (error) {
+      console.error("Wishlist update error:", error);
+    }
+  };
+
   return (
     <article className="group">
       {/* Image */}
-
       <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-black/[0.04] dark:bg-white/[0.04]">
         <Link href={`/products/${product.slug}`}>
           <img
@@ -18,7 +60,6 @@ export default function ProductCard({ product }) {
         </Link>
 
         {/* Discount */}
-
         {product.discount && (
           <div className="absolute right-4 top-4 rounded-full bg-black px-3 py-1.5 text-[8px] font-medium text-white dark:bg-white dark:text-black">
             {product.discount}%-
@@ -26,29 +67,33 @@ export default function ProductCard({ product }) {
         )}
 
         {/* Wishlist */}
-
         <button
           type="button"
-          aria-label="افزودن به علاقه‌مندی‌ها"
-          className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/20 text-white backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:bg-white hover:text-black"
+          onClick={toggleWishlist}
+          aria-label={
+            isFavorite ? "حذف از علاقه‌مندی‌ها" : "افزودن به علاقه‌مندی‌ها"
+          }
+          className={`absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 backdrop-blur-xl transition-all duration-300 hover:scale-105 ${
+            isFavorite ? "bg-white text-red-500" : "bg-black/30 text-white"
+          }`}
         >
-          <Heart className="h-3.5 w-3.5" />
+          <Heart
+            className="h-3.5 w-3.5"
+            fill={isFavorite ? "currentColor" : "none"}
+          />
         </button>
 
         {/* Quick Action */}
-
         <Link
           href={`/products/${product.slug}`}
           className="absolute bottom-4 left-4 right-4 flex translate-y-3 items-center justify-between rounded-xl bg-white/90 px-4 py-3 text-[9px] font-medium text-black opacity-0 backdrop-blur-xl transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 dark:bg-black/90 dark:text-white"
         >
           <span>مشاهده محصول</span>
-
           <ArrowUpLeft className="h-3.5 w-3.5" />
         </Link>
       </div>
 
       {/* Info */}
-
       <div className="mt-5">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -63,6 +108,7 @@ export default function ProductCard({ product }) {
             </Link>
           </div>
 
+          {/* Add to cart */}
           <button
             type="button"
             aria-label="افزودن به سبد خرید"
@@ -73,7 +119,6 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Price */}
-
         <div className="mt-4 flex items-center gap-2">
           <span className="text-xs font-medium">
             {product.price.toLocaleString("fa-IR")} تومان
@@ -87,7 +132,6 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Colors */}
-
         {product.colors?.length > 0 && (
           <div className="mt-4 flex items-center gap-1.5">
             {product.colors.map((color) => (
