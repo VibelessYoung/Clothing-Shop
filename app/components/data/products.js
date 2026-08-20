@@ -1,0 +1,130 @@
+export const products = [
+  {
+    id: 1,
+    slug: "oversized-black-tshirt",
+    name: "تیشرت اورسایز مشکی",
+    category: "تیشرت",
+    gender: "مردانه",
+    price: 890000,
+    oldPrice: 1090000,
+    discount: 18,
+    colors: ["مشکی", "سفید"],
+    sizes: ["M", "L", "XL"],
+    image: "/images/products/tshirt-black.jpg",
+    gallery: [
+      "/images/products/tshirt-black.jpg",
+      "/images/products/tshirt-black-2.jpg",
+      "/images/products/tshirt-black-3.jpg",
+    ],
+    description:
+      "تیشرت اورسایز با طراحی مینیمال و پارچه‌ای نرم و راحت، مناسب استفاده روزمره و استایل‌های کژوال.",
+    features: [
+      "پارچه نخ پنبه",
+      "فرم Oversize",
+      "مناسب استفاده روزمره",
+      "دوخت مقاوم",
+    ],
+    available: true,
+  },
+
+  {
+    id: 2,
+    slug: "minimal-beige-shirt",
+    name: "پیراهن مینیمال بژ",
+    category: "پیراهن",
+    gender: "مردانه",
+    price: 1490000,
+    colors: ["بژ", "سفید"],
+    sizes: ["M", "L", "XL"],
+    image: "/images/products/beige-shirt.jpg",
+    gallery: [
+      "/images/products/beige-shirt.jpg",
+      "/images/products/beige-shirt-2.jpg",
+    ],
+    description:
+      "پیراهنی مینیمال با برش تمیز و پارچه سبک که برای استایل‌های روزمره و نیمه‌رسمی طراحی شده است.",
+    features: ["پارچه سبک", "طراحی مینیمال", "فرم Regular", "مناسب چهار فصل"],
+    available: true,
+  },
+
+  {
+    id: 3,
+    slug: "relaxed-cargo-pants",
+    name: "شلوار کارگو Relaxed",
+    category: "شلوار",
+    gender: "مردانه",
+    price: 1790000,
+    oldPrice: 1990000,
+    discount: 10,
+    colors: ["مشکی", "زیتونی"],
+    sizes: ["30", "32", "34", "36"],
+    image: "/images/products/cargo.jpg",
+    gallery: ["/images/products/cargo.jpg", "/images/products/cargo-2.jpg"],
+    description:
+      "شلوار کارگو با فرم Relaxed و جیب‌های کاربردی، انتخابی مناسب برای استایل‌های مدرن و خیابانی.",
+    features: [
+      "فرم Relaxed",
+      "جیب‌های کاربردی",
+      "پارچه مقاوم",
+      "مناسب استایل Streetwear",
+    ],
+    available: true,
+  },
+
+  {
+    id: 4,
+    slug: "classic-hoodie",
+    name: "هودی کلاسیک",
+    category: "هودی",
+    gender: "یونیسکس",
+    price: 1690000,
+    colors: ["مشکی", "طوسی"],
+    sizes: ["M", "L", "XL"],
+    image: "/images/products/hoodie.jpg",
+    gallery: ["/images/products/hoodie.jpg", "/images/products/hoodie-2.jpg"],
+    description:
+      "هودی کلاسیک با طراحی ساده و پارچه گرم و نرم، مناسب روزهای سرد و استایل‌های کژوال.",
+    features: ["پارچه دورس", "داخل کرکی", "طراحی Unisex", "فرم آزاد"],
+    available: true,
+  },
+
+  {
+    id: 5,
+    slug: "wide-leg-denim",
+    name: "جین Wide Leg",
+    category: "شلوار",
+    gender: "یونیسکس",
+    price: 1890000,
+    colors: ["آبی"],
+    sizes: ["30", "32", "34", "36"],
+    image: "/images/products/wide-jeans.jpg",
+    gallery: [
+      "/images/products/wide-jeans.jpg",
+      "/images/products/wide-jeans-2.jpg",
+    ],
+    description:
+      "شلوار جین Wide Leg با فرم آزاد و ساختار مدرن برای استایل‌های مینیمال و خیابانی.",
+    features: ["Denim باکیفیت", "Wide Leg", "فرم آزاد", "دوخت مقاوم"],
+    available: true,
+  },
+
+  {
+    id: 6,
+    slug: "premium-white-tshirt",
+    name: "تیشرت Premium سفید",
+    category: "تیشرت",
+    gender: "یونیسکس",
+    price: 790000,
+    colors: ["سفید"],
+    sizes: ["S", "M", "L", "XL"],
+    image: "/images/products/white-tshirt.jpg",
+    gallery: [
+      "/images/products/white-tshirt.jpg",
+      "/images/products/white-tshirt-2.jpg",
+    ],
+    description:
+      "تیشرت سفید Premium با پارچه باکیفیت و فرم تمیز برای استفاده روزمره.",
+    features: ["100% نخ پنبه", "پارچه Premium", "فرم Regular", "مناسب Unisex"],
+    available: true,
+  },
+];
