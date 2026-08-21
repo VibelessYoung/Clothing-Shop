@@ -94,10 +94,6 @@ export default function Contact() {
       dir="rtl"
       className="relative overflow-hidden bg-white py-24 text-black transition-colors duration-500 dark:bg-black dark:text-white sm:py-32 lg:py-40"
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
-
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -right-40 top-20 h-[450px] w-[450px] rounded-full bg-black/[0.025] blur-3xl dark:bg-white/[0.025]" />
 
@@ -105,10 +101,6 @@ export default function Contact() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-        {/* =======================================================
-            HEADER
-        ======================================================== */}
-
         <div className="mb-14 flex items-center justify-between border-b border-black/[0.08] pb-5 dark:border-white/[0.08]">
           <div className="flex items-center gap-3">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black/[0.05] dark:bg-white/[0.06]">
@@ -124,16 +116,7 @@ export default function Contact() {
             CONTACT / 01
           </span>
         </div>
-
-        {/* =======================================================
-            MAIN
-        ======================================================== */}
-
         <div className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-          {/* =====================================================
-              LEFT CONTENT
-          ====================================================== */}
-
           <div className="lg:sticky lg:top-32 lg:h-fit">
             <p className="text-[9px] uppercase tracking-[0.3em] text-black/30 dark:text-white/25">
               ارتباط با ما
@@ -195,11 +178,6 @@ export default function Contact() {
               })}
             </div>
           </div>
-
-          {/* =====================================================
-              FORM
-          ====================================================== */}
-
           <div className="rounded-[2rem] border border-black/[0.08] bg-black/[0.02] p-5 dark:border-white/[0.08] dark:bg-white/[0.025] sm:p-7 lg:p-10">
             <div className="mb-8 flex items-start justify-between gap-5">
               <div>
@@ -220,36 +198,150 @@ export default function Contact() {
               {/* Name + Email */}
 
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field
-                  label="نام و نام خانوادگی"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder="مثلاً امیر محمدی"
-                  required
-                />
+                {/* Name */}
 
-                <Field
-                  label="ایمیل"
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  required
-                  dir="ltr"
-                />
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-2 block text-[9px] text-black/40 dark:text-white/30"
+                  >
+                    نام و نام خانوادگی
+                  </label>
+
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="مثلاً امیر محمدی"
+                    required
+                    autoComplete="name"
+                    className="
+          w-full
+          rounded-2xl
+          border
+          border-black/10
+          bg-white/60
+          px-4
+          py-3.5
+          text-xs
+          text-black
+          outline-none
+          transition-all
+          duration-300
+          placeholder:text-black/20
+          focus:border-black/25
+          focus:bg-white
+          focus:text-black
+
+          dark:border-white/10
+          dark:bg-black/30
+          dark:text-white
+          dark:placeholder:text-white/20
+          dark:focus:border-white/25
+          dark:focus:bg-black/30
+          dark:focus:text-white
+        "
+                  />
+                </div>
+
+                {/* Email */}
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-[9px] text-black/40 dark:text-white/30"
+                  >
+                    ایمیل
+                  </label>
+
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    required
+                    autoComplete="email"
+                    dir="ltr"
+                    className="
+          w-full
+          rounded-2xl
+          border
+          border-black/10
+          bg-white/60
+          px-4
+          py-3.5
+          text-xs
+          text-black
+          outline-none
+          transition-all
+          duration-300
+          placeholder:text-black/20
+          focus:border-black/25
+          focus:bg-white
+          focus:text-black
+
+          dark:border-white/10
+          dark:bg-black/30
+          dark:text-white
+          dark:placeholder:text-white/20
+          dark:focus:border-white/25
+          dark:focus:bg-black/30
+          dark:focus:text-white
+        "
+                  />
+                </div>
               </div>
 
               {/* Subject */}
 
-              <Field
-                label="موضوع"
-                name="subject"
-                value={form.subject}
-                onChange={handleChange}
-                placeholder="موضوع پیام شما"
-              />
+              <div>
+                <label
+                  htmlFor="subject"
+                  className="mb-2 block text-[9px] text-black/40 dark:text-white/30"
+                >
+                  موضوع
+                </label>
+
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  value={form.subject}
+                  onChange={handleChange}
+                  placeholder="موضوع پیام شما"
+                  autoComplete="off"
+                  className="
+        w-full
+        rounded-2xl
+        border
+        border-black/10
+        bg-white/60
+        px-4
+        py-3.5
+        text-xs
+        text-black
+        outline-none
+        transition-all
+        duration-300
+        placeholder:text-black/20
+        focus:border-black/25
+        focus:bg-white
+        focus:text-black
+
+        dark:border-white/10
+        dark:bg-black/30
+        dark:text-white
+        dark:placeholder:text-white/20
+        dark:focus:border-white/25
+        dark:focus:bg-black/30
+        dark:focus:text-white
+      "
+                />
+              </div>
 
               {/* Message */}
 
@@ -269,7 +361,31 @@ export default function Contact() {
                   placeholder="پیامتان را اینجا بنویسید..."
                   required
                   rows={7}
-                  className="w-full resize-none rounded-2xl border border-black/10 bg-white/60 px-4 py-4 text-xs text-black outline-none transition-all duration-300 placeholder:text-black/20 focus:border-black/25 focus:bg-white dark:border-white/10 dark:bg-black/30 dark:text-white dark:placeholder:text-white/20 dark:focus:border-white/25"
+                  className="
+        w-full
+        resize-none
+        rounded-2xl
+        border
+        border-black/10
+        bg-white/60
+        px-4
+        py-4
+        text-xs
+        text-black
+        outline-none
+        transition-all
+        duration-300
+        placeholder:text-black/20
+        focus:border-black/25
+        focus:bg-white
+
+        dark:border-white/10
+        dark:bg-black/30
+        dark:text-white
+        dark:placeholder:text-white/20
+        dark:focus:border-white/25
+        dark:focus:bg-black/30
+      "
                 />
               </div>
 
@@ -277,10 +393,11 @@ export default function Contact() {
 
               {status === "success" && (
                 <div className="flex items-center gap-3 rounded-xl border border-green-500/20 bg-green-500/[0.05] px-4 py-3 text-[9px] text-green-600 dark:text-green-400">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-500/10">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500/10">
                     <Check className="h-3 w-3" />
                   </span>
-                  پیام شما با موفقیت ارسال شد.
+
+                  <span>پیام شما با موفقیت ارسال شد.</span>
                 </div>
               )}
 
@@ -295,13 +412,36 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="group flex w-full items-center justify-between rounded-2xl bg-black px-5 py-4 text-[10px] font-medium text-white transition-all duration-300 hover:bg-black/90 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-white/90"
+                className="
+      group
+      flex
+      w-full
+      items-center
+      justify-between
+      rounded-2xl
+      bg-black
+      px-5
+      py-4
+      text-[10px]
+      font-medium
+      text-white
+      transition-all
+      duration-300
+      hover:bg-black/90
+      active:scale-[0.99]
+      disabled:cursor-not-allowed
+      disabled:opacity-60
+
+      dark:bg-white
+      dark:text-black
+      dark:hover:bg-white/90
+    "
               >
                 <span>
                   {status === "sending" ? "در حال ارسال..." : "ارسال پیام"}
                 </span>
 
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 dark:bg-black/10">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 dark:bg-black/10">
                   {status === "sending" ? (
                     <Loader2 className="h-3.5 w-3.5 animate-spin" />
                   ) : (
@@ -310,17 +450,14 @@ export default function Contact() {
                 </span>
               </button>
 
+              {/* Terms */}
+
               <p className="text-center text-[8px] leading-5 text-black/20 dark:text-white/15">
                 با ارسال فرم، با قوانین و شرایط استفاده از سایت موافقت می‌کنید.
               </p>
             </form>
           </div>
         </div>
-
-        {/* =======================================================
-            BOTTOM STATEMENT
-        ======================================================== */}
-
         <div className="mt-20 flex flex-col items-center border-t border-black/[0.08] pt-12 text-center dark:border-white/[0.08]">
           <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-black/20 dark:text-white/15">
             Let's create something meaningful
@@ -336,10 +473,6 @@ export default function Contact() {
     </section>
   );
 }
-
-/* ===============================================================
-   FIELD COMPONENT
-================================================================ */
 
 function Field({
   label,

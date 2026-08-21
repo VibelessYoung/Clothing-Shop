@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -16,73 +16,36 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const products = [
-  {
-    id: 1,
-    name: "کت اورسایز مینیمال",
-    englishName: "Oversized Minimal Jacket",
-    category: "Outerwear",
-    price: "۳,۸۹۰,۰۰۰",
-    oldPrice: "۴,۴۹۰,۰۰۰",
-    badge: "جدید",
-    image: "/images/products/product-01.jpg",
-    colors: ["bg-black", "bg-neutral-300", "bg-stone-500"],
-  },
-  {
-    id: 2,
-    name: "هودی Essential",
-    englishName: "Essential Heavy Hoodie",
-    category: "Hoodies",
-    price: "۲,۴۹۰,۰۰۰",
-    oldPrice: null,
-    badge: "پرفروش",
-    image: "/images/products/product-02.jpg",
-    colors: ["bg-neutral-800", "bg-stone-300", "bg-neutral-100"],
-  },
-  {
-    id: 3,
-    name: "تیشرت Heavy Cotton",
-    englishName: "Heavy Cotton T-Shirt",
-    category: "T-Shirts",
-    price: "۱,۲۹۰,۰۰۰",
-    oldPrice: null,
-    badge: "جدید",
-    image: "/images/products/product-03.jpg",
-    colors: ["bg-white", "bg-black", "bg-stone-400"],
-  },
-  {
-    id: 4,
-    name: "شلوار Wide Leg",
-    englishName: "Wide Leg Trousers",
-    category: "Pants",
-    price: "۲,۱۹۰,۰۰۰",
-    oldPrice: null,
-    badge: "محبوب",
-    image: "/images/products/product-04.jpg",
-    colors: ["bg-black", "bg-neutral-500"],
-  },
-  {
-    id: 5,
-    name: "پیراهن Linen",
-    englishName: "Relaxed Linen Shirt",
-    category: "Shirts",
-    price: "۱,۸۹۰,۰۰۰",
-    oldPrice: "۲,۱۹۰,۰۰۰",
-    badge: "−۱۵٪",
-    image: "/images/products/product-05.jpg",
-    colors: ["bg-stone-200", "bg-neutral-800", "bg-white"],
-  },
-];
+import { products } from "../data/products";
 
 export default function ProductSlider() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const STORAGE_KEY = "amir_wishlist";
+
   const [likedProducts, setLikedProducts] = useState([]);
 
+  useEffect(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+      if (Array.isArray(stored)) {
+        setLikedProducts(stored);
+      }
+    } catch (error) {
+      console.error("Wishlist error:", error);
+    }
+  }, []);
+
   const toggleLike = (productId) => {
-    setLikedProducts((current) =>
-      current.includes(productId)
+    setLikedProducts((current) => {
+      const updated = current.includes(productId)
         ? current.filter((id) => id !== productId)
-        : [...current, productId],
-    );
+        : [...current, productId];
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+
+      return updated;
+    });
   };
 
   return (
@@ -100,10 +63,6 @@ export default function ProductSlider() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px]">
-        {/* =====================================================
-            HEADER
-        ====================================================== */}
-
         <div className="mb-12 px-5 sm:px-8 lg:px-12">
           <div className="flex items-end justify-between gap-8 border-b border-black/[0.08] pb-6 dark:border-white/[0.08]">
             <div>
@@ -149,14 +108,12 @@ export default function ProductSlider() {
             </div>
           </div>
         </div>
-
-        {/* =====================================================
-            SWIPER
-        ====================================================== */}
-
         <div className="product-slider px-5 sm:px-8 lg:px-12">
           <Swiper
             modules={[Navigation, Pagination, A11y, Keyboard]}
+            onSlideChange={(swiper) => {
+              setActiveSlide(swiper.realIndex);
+            }}
             navigation={{
               prevEl: ".product-slider-prev",
               nextEl: ".product-slider-next",
@@ -201,10 +158,6 @@ export default function ProductSlider() {
               return (
                 <SwiperSlide key={product.id}>
                   <article className="group">
-                    {/* =================================================
-                        IMAGE
-                    ================================================== */}
-
                     <div className="relative aspect-[0.78] overflow-hidden rounded-[1.5rem] bg-neutral-100 dark:bg-neutral-900">
                       <img
                         src={product.image}
@@ -255,11 +208,6 @@ export default function ProductSlider() {
                         <ShoppingBag className="h-3.5 w-3.5" />
                       </button>
                     </div>
-
-                    {/* =================================================
-                        PRODUCT INFO
-                    ================================================== */}
-
                     <div className="px-1 pt-5">
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -314,23 +262,18 @@ export default function ProductSlider() {
             })}
           </Swiper>
         </div>
-
-        {/* =====================================================
-            BOTTOM
-        ====================================================== */}
-
         <div className="mt-10 flex items-center justify-between px-5 sm:px-8 lg:px-12">
           {/* Pagination */}
 
           <div className="flex items-center gap-4">
             <span className="font-mono text-[8px] text-black/25 dark:text-white/20">
-              01
+              {String(activeSlide + 1).padStart(2, "0")}
             </span>
 
             <div className="product-slider-pagination !static !flex !w-auto items-center gap-1" />
 
             <span className="font-mono text-[8px] text-black/20 dark:text-white/15">
-              05
+              {String(products.length).padStart(2, "0")}
             </span>
           </div>
 
@@ -348,11 +291,6 @@ export default function ProductSlider() {
           </button>
         </div>
       </div>
-
-      {/* =========================================================
-          SWIPER CUSTOM STYLES
-      ========================================================== */}
-
       <style jsx global>{`
         .product-slider-pagination {
           display: flex;

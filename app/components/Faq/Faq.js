@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUpLeft, ChevronDown, HelpCircle, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const faqs = [
   {
@@ -55,10 +56,6 @@ export default function FAQ() {
       dir="rtl"
       className="relative overflow-hidden bg-white py-24 text-black transition-colors duration-500 dark:bg-black dark:text-white sm:py-32 lg:py-40"
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
-
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -right-48 top-20 h-[450px] w-[450px] rounded-full bg-black/[0.025] blur-3xl dark:bg-white/[0.025]" />
 
@@ -66,10 +63,6 @@ export default function FAQ() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-        {/* =======================================================
-            TOP LINE
-        ======================================================== */}
-
         <div className="mb-14 flex items-center justify-between border-b border-black/[0.08] pb-5 dark:border-white/[0.08]">
           <div className="flex items-center gap-3">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black/[0.05] dark:bg-white/[0.06]">
@@ -85,16 +78,7 @@ export default function FAQ() {
             FAQ / 06
           </span>
         </div>
-
-        {/* =======================================================
-            MAIN GRID
-        ======================================================== */}
-
         <div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24">
-          {/* =====================================================
-              INTRO
-          ====================================================== */}
-
           <div className="lg:sticky lg:top-32 lg:h-fit">
             <p className="text-[9px] uppercase tracking-[0.3em] text-black/30 dark:text-white/25">
               راهنمای خرید
@@ -111,17 +95,18 @@ export default function FAQ() {
             </p>
 
             {/* Support CTA */}
+            <Link href="#contact">
+              <button
+                type="button"
+                className="group mt-8 flex items-center gap-3 rounded-full border border-black/10 px-5 py-3 text-[9px] font-medium text-black/60 transition-all duration-300 hover:border-black/25 hover:bg-black/[0.03] hover:text-black dark:border-white/10 dark:text-white/55 dark:hover:border-white/25 dark:hover:bg-white/[0.04] dark:hover:text-white"
+              >
+                <span>ارتباط با ما</span>
 
-            <button
-              type="button"
-              className="group mt-8 flex items-center gap-3 rounded-full border border-black/10 px-5 py-3 text-[9px] font-medium text-black/60 transition-all duration-300 hover:border-black/25 hover:bg-black/[0.03] hover:text-black dark:border-white/10 dark:text-white/55 dark:hover:border-white/25 dark:hover:bg-white/[0.04] dark:hover:text-white"
-            >
-              <span>ارتباط با پشتیبانی</span>
-
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-black/[0.05] transition-transform duration-300 group-hover:-translate-x-1 dark:bg-white/[0.07]">
-                <ArrowUpLeft className="h-3 w-3" />
-              </span>
-            </button>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-black/[0.05] transition-transform duration-300 group-hover:-translate-x-1 dark:bg-white/[0.07]">
+                  <ArrowUpLeft className="h-3 w-3" />
+                </span>
+              </button>
+            </Link>
 
             {/* Mini Info */}
 
@@ -133,15 +118,10 @@ export default function FAQ() {
               </span>
 
               <span className="text-[8px] uppercase tracking-[0.15em] text-black/30 dark:text-white/25">
-                پشتیبانی آنلاین
+                آنلاین هستیم
               </span>
             </div>
           </div>
-
-          {/* =====================================================
-              FAQ ACCORDION
-          ====================================================== */}
-
           <div className="border-t border-black/[0.08] dark:border-white/[0.08]">
             {faqs.map((faq, index) => {
               const isOpen = openId === faq.id;
@@ -212,11 +192,6 @@ export default function FAQ() {
             })}
           </div>
         </div>
-
-        {/* =======================================================
-            BOTTOM DECORATION
-        ======================================================== */}
-
         <div className="mt-20 grid gap-4 sm:grid-cols-3">
           {[
             {
@@ -250,14 +225,8 @@ export default function FAQ() {
             </div>
           ))}
         </div>
-
-        {/* =======================================================
-            FINAL STATEMENT
-        ======================================================== */}
-
         <div className="mt-24 flex flex-col items-center text-center">
           <Sparkles className="h-4 w-4 text-black/20 dark:text-white/20" />
-
           <p className="mt-5 max-w-lg text-xs leading-7 text-black/35 dark:text-white/30">
             هنوز سوالی داری؟
             <br />

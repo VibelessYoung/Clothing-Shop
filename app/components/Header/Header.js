@@ -12,22 +12,23 @@ import {
   ChevronDown,
 } from "lucide-react";
 import ThemeButton from "../ui/ThemeButton";
+import Link from "next/link";
 
 const navItems = [
   {
-    id: "new-arrivals",
+    id: "about",
     label: "درباره ما",
   },
   {
-    id: "women",
+    id: "products",
     label: "محصولات",
   },
   {
-    id: "men",
+    id: "faq",
     label: "سوالات متداول",
   },
   {
-    id: "collections",
+    id: "contact",
     label: "تماس با ما",
   },
 ];
@@ -162,7 +163,7 @@ export default function Header() {
 
             <div className="hidden sm:block">
               <p className="text-[13px] font-semibold tracking-[0.12em] text-black dark:text-white">
-                Clothing
+                Brand
               </p>
 
               <p className="mt-0.5 text-[7px] uppercase tracking-[0.35em] text-black/35 dark:text-white/30">
@@ -203,36 +204,27 @@ export default function Header() {
             </div>
           </nav>
           <div className="flex items-center gap-1.5">
-            {/* Search */}
-
-            <button
-              type="button"
-              onClick={() => setIsSearchOpen(true)}
-              aria-label="Search"
-              className="group flex h-10 w-10 items-center justify-center rounded-full text-black/55 transition-all duration-300 hover:bg-black/[0.05] hover:text-black dark:text-white/55 dark:hover:bg-white/[0.06] dark:hover:text-white"
-            >
-              <Search className="h-[17px] w-[17px] transition-transform duration-300 group-hover:scale-110" />
-            </button>
-
             {/* Account */}
-
-            <button
-              type="button"
-              aria-label="Account"
-              className="group hidden h-10 w-10 items-center justify-center rounded-full text-black/55 transition-all duration-300 hover:bg-black/[0.05] hover:text-black dark:text-white/55 dark:hover:bg-white/[0.06] dark:hover:text-white sm:flex"
-            >
-              <UserRound className="h-[17px] w-[17px] transition-transform duration-300 group-hover:scale-110" />
-            </button>
+            <Link href="/auth">
+              <button
+                type="button"
+                aria-label="Account"
+                className="group hidden h-10 w-10 items-center justify-center rounded-full text-black/55 transition-all duration-300 hover:bg-black/[0.05] hover:text-black dark:text-white/55 dark:hover:bg-white/[0.06] dark:hover:text-white sm:flex"
+              >
+                <UserRound className="h-[17px] w-[17px] transition-transform duration-300 group-hover:scale-110" />
+              </button>
+            </Link>
 
             {/* Wishlist */}
-
-            <button
-              type="button"
-              aria-label="Wishlist"
-              className="group hidden h-10 w-10 items-center justify-center rounded-full text-black/55 transition-all duration-300 hover:bg-black/[0.05] hover:text-black dark:text-white/55 dark:hover:bg-white/[0.06] dark:hover:text-white md:flex"
-            >
-              <Heart className="h-[17px] w-[17px] transition-transform duration-300 group-hover:scale-110" />
-            </button>
+            <Link href="/wishlist">
+              <button
+                type="button"
+                aria-label="Wishlist"
+                className="group hidden h-10 w-10 items-center justify-center rounded-full text-black/55 transition-all duration-300 hover:bg-black/[0.05] hover:text-black dark:text-white/55 dark:hover:bg-white/[0.06] dark:hover:text-white md:flex"
+              >
+                <Heart className="h-[17px] w-[17px] transition-transform duration-300 group-hover:scale-110" />
+              </button>
+            </Link>
 
             {/* Cart */}
 
@@ -256,15 +248,16 @@ export default function Header() {
             <div className="mx-1 hidden h-6 w-px bg-black/[0.08] dark:bg-white/[0.08] sm:block" />
 
             {/* Shop Now */}
-
-            <button
-              type="button"
-              onClick={() => scrollToSection("new-arrivals")}
-              className="group hidden items-center gap-2 rounded-full bg-black px-4 py-2.5 text-[9px] font-medium uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-black/85 dark:bg-white dark:text-black dark:hover:bg-white/85 xl:flex"
-            >
-              خرید کنید
-              <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </button>
+            <Link href="/products">
+              <button
+                type="button"
+                onClick={() => scrollToSection("new-arrivals")}
+                className="group hidden items-center gap-2 rounded-full bg-black px-4 py-2.5 text-[9px] font-medium uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-black/85 dark:bg-white dark:text-black dark:hover:bg-white/85 xl:flex"
+              >
+                خرید کنید
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </button>
+            </Link>
 
             {/* Mobile Menu */}
 
@@ -462,38 +455,40 @@ export default function Header() {
 
           {/* Mobile Actions */}
 
-          <div className="grid grid-cols-3 gap-2 border-t border-black/[0.07] p-4 dark:border-white/[0.07]">
+          <div className="flex justify-evenly border-t border-black/[0.07] p-4 dark:border-white/[0.07]">
             {/* Account */}
+            <Link href="/auth">
+              <button
+                type="button"
+                className="flex flex-col p-2 items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
+              >
+                <UserRound className="h-4 w-4" />
 
-            <button
-              type="button"
-              className="flex flex-col items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
-            >
-              <UserRound className="h-4 w-4" />
-
-              <span className="text-[8px] uppercase tracking-wider">
-                Account
-              </span>
-            </button>
+                <span className="text-[8px] uppercase tracking-wider">
+                  Account
+                </span>
+              </button>
+            </Link>
 
             {/* Wishlist */}
+            <Link href="/wishlist">
+              <button
+                type="button"
+                className="flex flex-col p-2 items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
+              >
+                <Heart className="h-4 w-4" />
 
-            <button
-              type="button"
-              className="flex flex-col items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
-            >
-              <Heart className="h-4 w-4" />
-
-              <span className="text-[8px] uppercase tracking-wider">
-                Wishlist
-              </span>
-            </button>
+                <span className="text-[8px] uppercase tracking-wider">
+                  Wishlist
+                </span>
+              </button>
+            </Link>
 
             {/* Bag */}
 
             <button
               type="button"
-              className="relative flex flex-col items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
+              className="relative flex flex-col p-5 items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
             >
               <ShoppingBag className="h-4 w-4" />
 
@@ -508,17 +503,19 @@ export default function Header() {
           {/* CTA */}
 
           <div className="px-4 pb-4">
-            <button
-              type="button"
-              onClick={() => {
-                scrollToSection("new-arrivals");
-              }}
-              className="group flex w-full items-center justify-between rounded-xl bg-black px-4 py-3.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white dark:bg-white dark:text-black"
-            >
-              <span>Explore New Arrivals</span>
+            <Link href="/products">
+              <button
+                type="button"
+                onClick={() => {
+                  scrollToSection("new-arrivals");
+                }}
+                className="group flex w-full items-center justify-between rounded-xl bg-black px-4 py-3.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white dark:bg-white dark:text-black"
+              >
+                <span>Explore New Products</span>
 
-              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </button>
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -9,7 +9,6 @@ const STORAGE_KEY = "amir_wishlist";
 export default function ProductCard({ product }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // بررسی وضعیت Wishlist هنگام لود شدن کارت
   useEffect(() => {
     try {
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
@@ -21,7 +20,6 @@ export default function ProductCard({ product }) {
     }
   }, [product.id]);
 
-  // افزودن / حذف از Wishlist
   const toggleWishlist = () => {
     try {
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
@@ -29,10 +27,8 @@ export default function ProductCard({ product }) {
       let updated;
 
       if (stored.includes(product.id)) {
-        // حذف
         updated = stored.filter((id) => id !== product.id);
       } else {
-        // اضافه کردن
         updated = [...stored, product.id];
       }
 
@@ -40,7 +36,6 @@ export default function ProductCard({ product }) {
 
       setIsFavorite(updated.includes(product.id));
 
-      // اطلاع به سایر کامپوننت‌ها
       window.dispatchEvent(new Event("wishlistUpdated"));
     } catch (error) {
       console.error("Wishlist update error:", error);

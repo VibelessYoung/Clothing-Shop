@@ -33,10 +33,6 @@ export default function BrandStory() {
       dir="rtl"
       className="relative overflow-hidden bg-white py-24 text-black transition-colors duration-500 dark:bg-black dark:text-white sm:py-32 lg:py-40"
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
-
       <div className="pointer-events-none absolute inset-0">
         {/* Soft Glow */}
 
@@ -57,10 +53,6 @@ export default function BrandStory() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-        {/* =======================================================
-            TOP LABEL
-        ======================================================== */}
-
         <div className="mb-16 flex items-center justify-between border-b border-black/[0.08] pb-5 dark:border-white/[0.08]">
           <div className="flex items-center gap-3">
             <span className="h-1.5 w-1.5 rounded-full bg-black dark:bg-white" />
@@ -74,11 +66,6 @@ export default function BrandStory() {
             ABOUT / 01
           </span>
         </div>
-
-        {/* =======================================================
-            MAIN STATEMENT
-        ======================================================== */}
-
         <div className="grid gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:gap-20">
           {/* Main Text */}
 
@@ -106,26 +93,8 @@ export default function BrandStory() {
               ما به مینیمالیسم، کیفیت و جزئیات باور داریم و هر مجموعه را با هدف
               ساختن یک استایل ماندگار طراحی می‌کنیم.
             </p>
-
-            <button
-              type="button"
-              className="group mt-8 flex w-fit items-center gap-3 text-[10px] font-medium uppercase tracking-[0.15em] text-black dark:text-white"
-            >
-              <span className="border-b border-black/30 pb-1 transition-colors group-hover:border-black dark:border-white/30 dark:group-hover:border-white">
-                داستان ما
-              </span>
-
-              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-black/10 transition-all duration-300 group-hover:-translate-x-1 group-hover:bg-black group-hover:text-white dark:border-white/10 dark:group-hover:bg-white dark:group-hover:text-black">
-                <ArrowUpLeft className="h-3.5 w-3.5" />
-              </span>
-            </button>
           </div>
         </div>
-
-        {/* =======================================================
-            BRAND IMAGE / VISUAL
-        ======================================================== */}
-
         <div className="mt-20 sm:mt-28">
           <div className="relative overflow-hidden rounded-[2rem] border border-black/[0.07] bg-neutral-100 dark:border-white/[0.08] dark:bg-neutral-950">
             <div className="grid min-h-[360px] lg:grid-cols-2">
@@ -196,11 +165,6 @@ export default function BrandStory() {
             </div>
           </div>
         </div>
-
-        {/* =======================================================
-            VALUES
-        ======================================================== */}
-
         <div className="mt-20 border-t border-black/[0.08] pt-10 dark:border-white/[0.08] sm:mt-28">
           <div className="mb-10 flex items-end justify-between">
             <div>
@@ -255,11 +219,6 @@ export default function BrandStory() {
             })}
           </div>
         </div>
-
-        {/* =======================================================
-            BOTTOM STATEMENT
-        ======================================================== */}
-
         <div className="relative mt-24 overflow-hidden rounded-[2rem] bg-black px-6 py-16 text-white dark:bg-white dark:text-black sm:px-12 sm:py-20 lg:px-20">
           <div className="relative z-10 max-w-3xl">
             <p className="text-[8px] uppercase tracking-[0.35em] text-white/40 dark:text-black/40">

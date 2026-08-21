@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowLeft, ArrowUpLeft, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -9,10 +10,6 @@ export default function Hero() {
       dir="rtl"
       className="relative min-h-screen overflow-hidden bg-white text-black transition-colors duration-500 dark:bg-black dark:text-white"
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
-
       <div className="pointer-events-none absolute inset-0">
         {/* Top Glow */}
 
@@ -33,17 +30,8 @@ export default function Hero() {
           }}
         />
       </div>
-
-      {/* =========================================================
-          CONTENT
-      ========================================================== */}
-
       <div className="relative mx-auto flex min-h-screen max-w-[1440px] items-center px-5 pb-16 pt-32 sm:px-8 lg:px-12 lg:pb-20 lg:pt-28">
         <div className="grid w-full items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-          {/* =====================================================
-              TEXT SIDE
-          ====================================================== */}
-
           <div className="order-2 max-w-xl lg:order-1">
             {/* Eyebrow */}
 
@@ -86,28 +74,18 @@ export default function Hero() {
 
             <div className="mt-9 flex flex-wrap items-center gap-3">
               {/* Primary */}
+              <Link href="#products">
+                <button
+                  type="button"
+                  className="group flex items-center gap-4 rounded-full bg-black px-6 py-3.5 text-[10px] font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/10 dark:bg-white dark:text-black dark:hover:shadow-white/10"
+                >
+                  <span>مشاهده محصولات</span>
 
-              <button
-                type="button"
-                className="group flex items-center gap-4 rounded-full bg-black px-6 py-3.5 text-[10px] font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/10 dark:bg-white dark:text-black dark:hover:shadow-white/10"
-              >
-                <span>مشاهده مجموعه</span>
-
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 group-hover:-translate-x-1 dark:bg-black/10">
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                </span>
-              </button>
-
-              {/* Secondary */}
-
-              <button
-                type="button"
-                className="group flex items-center gap-2 rounded-full border border-black/10 px-6 py-3.5 text-[10px] font-medium text-black/60 transition-all duration-300 hover:border-black/25 hover:bg-black/[0.03] hover:text-black dark:border-white/10 dark:text-white/60 dark:hover:border-white/25 dark:hover:bg-white/[0.04] dark:hover:text-white"
-              >
-                <span>درباره برند</span>
-
-                <ArrowUpLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5" />
-              </button>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 group-hover:-translate-x-1 dark:bg-black/10">
+                    <ArrowLeft className="h-3.5 w-3.5" />
+                  </span>
+                </button>
+              </Link>
             </div>
 
             {/* Stats */}
@@ -142,11 +120,6 @@ export default function Hero() {
               </div>
             </div>
           </div>
-
-          {/* =====================================================
-              IMAGE SIDE
-          ====================================================== */}
-
           <div className="order-1 lg:order-2">
             <div className="relative mx-auto max-w-[620px]">
               {/* Main Image */}
@@ -155,7 +128,7 @@ export default function Hero() {
                 {/* Replace this image with your product/model image */}
 
                 <img
-                  src="/images/hero-fashion.jpg"
+                  src="/images/cloth.jpg"
                   alt="مدل پوشیده در لباس‌های جدید"
                   className="h-full w-full object-cover grayscale transition-all duration-1000 group-hover:scale-[1.03] group-hover:grayscale-0"
                 />
@@ -228,11 +201,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* =========================================================
-          BOTTOM SCROLL INDICATOR
-      ========================================================== */}
-
       <div className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 items-center gap-3 md:flex">
         <span className="text-[7px] uppercase tracking-[0.3em] text-black/25 dark:text-white/20">
           Scroll to explore

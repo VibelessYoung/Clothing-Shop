@@ -60,10 +60,6 @@ export default function Footer() {
       dir="rtl"
       className="relative overflow-hidden bg-white text-black transition-colors duration-500 dark:bg-black dark:text-white"
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================== */}
-
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -right-40 top-20 h-[500px] w-[500px] rounded-full bg-black/[0.025] blur-3xl dark:bg-white/[0.025]" />
 
@@ -71,10 +67,6 @@ export default function Footer() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-        {/* =======================================================
-            NEWSLETTER / CTA
-        ======================================================== */}
-
         <div className="border-y border-black/[0.08] py-16 dark:border-white/[0.08] sm:py-20 lg:py-24">
           <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             {/* Text */}
@@ -136,16 +128,7 @@ export default function Footer() {
             </form>
           </div>
         </div>
-
-        {/* =======================================================
-            MAIN FOOTER
-        ======================================================== */}
-
         <div className="grid gap-14 py-16 sm:py-20 lg:grid-cols-[1.3fr_2fr] lg:gap-20">
-          {/* =====================================================
-              BRAND
-          ====================================================== */}
-
           <div>
             {/* Logo */}
 
@@ -231,11 +214,6 @@ export default function Footer() {
               </a>
             </div>
           </div>
-
-          {/* =====================================================
-              LINKS
-          ====================================================== */}
-
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
             {/* Shop */}
 
@@ -262,11 +240,6 @@ export default function Footer() {
             />
           </div>
         </div>
-
-        {/* =======================================================
-            BRAND STATEMENT
-        ======================================================== */}
-
         <div className="border-y border-black/[0.08] py-12 dark:border-white/[0.08] sm:py-16">
           <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -293,11 +266,6 @@ export default function Footer() {
             </button>
           </div>
         </div>
-
-        {/* =======================================================
-            BOTTOM BAR
-        ======================================================== */}
-
         <div className="flex flex-col gap-5 py-7 sm:flex-row sm:items-center sm:justify-between">
           {/* Copyright */}
 
@@ -345,11 +313,6 @@ export default function Footer() {
           </a>
         </div>
       </div>
-
-      {/* =========================================================
-          HUGE BRAND TEXT
-      ========================================================== */}
-
       <div className="pointer-events-none overflow-hidden px-5 pb-[-10px] sm:px-8 lg:px-12">
         <div className="select-none whitespace-nowrap text-center text-[18vw] font-semibold leading-[0.7] tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.035]">
           AMIR
@@ -358,11 +321,6 @@ export default function Footer() {
     </footer>
   );
 }
-
-/* ===============================================================
-   FOOTER COLUMN
-================================================================ */
-
 function FooterColumn({ title, links, onNavigate }) {
   return (
     <div>

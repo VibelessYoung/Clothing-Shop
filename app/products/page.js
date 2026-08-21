@@ -56,10 +56,6 @@ export default function ProductsPage() {
       dir="rtl"
       className="min-h-screen bg-white text-black transition-colors duration-500 dark:bg-black dark:text-white"
     >
-      {/* =====================================================
-          HEADER
-      ====================================================== */}
-
       <section className="relative overflow-hidden px-5 pb-12 pt-32 sm:px-8 sm:pt-40 lg:px-12">
         <div className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-black/[0.025] blur-3xl dark:bg-white/[0.02]" />
 
@@ -92,11 +88,6 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
-
-      {/* =====================================================
-          FILTERS
-      ====================================================== */}
-
       <section className="sticky top-16 z-30 border-y border-black/[0.07] bg-white/85 backdrop-blur-xl dark:border-white/[0.07] dark:bg-black/85">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-4 px-5 py-4 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           {/* Categories */}
@@ -162,11 +153,6 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
-
-      {/* =====================================================
-          PRODUCTS
-      ====================================================== */}
-
       <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-28">
         <div className="mx-auto max-w-[1440px]">
           {/* Result count */}

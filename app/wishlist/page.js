@@ -63,10 +63,6 @@ export default function WishlistPage() {
       dir="rtl"
       className="min-h-screen bg-white text-black transition-colors duration-500 dark:bg-black dark:text-white"
     >
-      {/* =====================================================
-          HEADER
-      ====================================================== */}
-
       <header className="border-b border-black/[0.07] dark:border-white/[0.07]">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-6 sm:px-8 lg:px-12">
           {/* Logo */}
@@ -99,11 +95,6 @@ export default function WishlistPage() {
           </Link>
         </div>
       </header>
-
-      {/* =====================================================
-          HERO
-      ====================================================== */}
-
       <section className="relative overflow-hidden px-5 pb-14 pt-16 sm:px-8 sm:pb-20 lg:px-12 lg:pt-20">
         {/* Ambient */}
 
@@ -146,11 +137,6 @@ export default function WishlistPage() {
           </div>
         </div>
       </section>
-
-      {/* =====================================================
-          CONTENT
-      ====================================================== */}
-
       <section className="px-5 pb-24 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-[1440px]">
           {wishlistProducts.length > 0 ? (
@@ -194,11 +180,6 @@ export default function WishlistPage() {
     </main>
   );
 }
-
-/* ===============================================================
-   WISHLIST CARD
-================================================================ */
-
 function WishlistCard({ product, onRemove }) {
   return (
     <article className="group">
@@ -288,11 +269,6 @@ function WishlistCard({ product, onRemove }) {
     </article>
   );
 }
-
-/* ===============================================================
-   EMPTY STATE
-================================================================ */
-
 function EmptyWishlist() {
   return (
     <div className="relative flex min-h-[500px] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-black/[0.07] bg-black/[0.015] dark:border-white/[0.07] dark:bg-white/[0.015]">
