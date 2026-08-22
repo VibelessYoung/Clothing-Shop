@@ -8,6 +8,7 @@ import {
   ShoppingBag,
   Sparkles,
 } from "lucide-react";
+import Link from "next/link";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, Keyboard } from "swiper/modules";
@@ -278,17 +279,18 @@ export default function ProductSlider() {
           </div>
 
           {/* View All */}
+          <Link href="/products">
+            <button
+              type="button"
+              className="group flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-black/50 transition-colors hover:text-black dark:text-white/45 dark:hover:text-white"
+            >
+              <span className="border-b border-black/20 pb-1 dark:border-white/20">
+                مشاهده همه محصولات
+              </span>
 
-          <button
-            type="button"
-            className="group flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.15em] text-black/50 transition-colors hover:text-black dark:text-white/45 dark:hover:text-white"
-          >
-            <span className="border-b border-black/20 pb-1 dark:border-white/20">
-              مشاهده همه محصولات
-            </span>
-
-            <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
-          </button>
+              <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
+            </button>
+          </Link>
         </div>
       </div>
       <style jsx global>{`
