@@ -227,20 +227,21 @@ export default function Header() {
             </Link>
 
             {/* Cart */}
+            <Link href="/cart">
+              <button
+                type="button"
+                aria-label="Shopping bag"
+                className="group relative flex h-10 w-10 items-center justify-center rounded-full text-black transition-all duration-300 hover:bg-black/[0.05] dark:text-white dark:hover:bg-white/[0.06]"
+              >
+                <ShoppingBag className="h-[17px] w-[17px] transition-transform duration-300 group-hover:-translate-y-0.5" />
 
-            <button
-              type="button"
-              aria-label="Shopping bag"
-              className="group relative flex h-10 w-10 items-center justify-center rounded-full text-black transition-all duration-300 hover:bg-black/[0.05] dark:text-white dark:hover:bg-white/[0.06]"
-            >
-              <ShoppingBag className="h-[17px] w-[17px] transition-transform duration-300 group-hover:-translate-y-0.5" />
+                {/* Cart Count */}
 
-              {/* Cart Count */}
-
-              <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-black px-1 text-[7px] font-semibold text-white dark:bg-white dark:text-black">
-                2
-              </span>
-            </button>
+                <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-black px-1 text-[7px] font-semibold text-white dark:bg-white dark:text-black">
+                  2
+                </span>
+              </button>
+            </Link>
             <ThemeButton />
 
             {/* Divider */}
@@ -485,19 +486,20 @@ export default function Header() {
             </Link>
 
             {/* Bag */}
+            <Link href="/cart">
+              <button
+                type="button"
+                className="relative flex flex-col p-5 items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
+              >
+                <ShoppingBag className="h-4 w-4" />
 
-            <button
-              type="button"
-              className="relative flex flex-col p-5 items-center gap-2 rounded-xl border border-black/[0.07] py-3 text-black/55 transition-colors hover:bg-black/[0.03] dark:border-white/[0.07] dark:text-white/55 dark:hover:bg-white/[0.03]"
-            >
-              <ShoppingBag className="h-4 w-4" />
+                <span className="text-[8px] uppercase tracking-wider">Bag</span>
 
-              <span className="text-[8px] uppercase tracking-wider">Bag</span>
-
-              <span className="absolute right-3 top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-black px-1 text-[7px] text-white dark:bg-white dark:text-black">
-                2
-              </span>
-            </button>
+                <span className="absolute right-3 top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-black px-1 text-[7px] text-white dark:bg-white dark:text-black">
+                  2
+                </span>
+              </button>
+            </Link>
           </div>
 
           {/* CTA */}
