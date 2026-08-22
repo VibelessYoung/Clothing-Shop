@@ -1,28 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpLeft, Heart, ShoppingBag } from "lucide-react";
+import { ArrowUpLeft, Heart, ShoppingBag, Check } from "lucide-react";
+
 import { useEffect, useState } from "react";
 
-const STORAGE_KEY = "amir_wishlist";
+const WISHLIST_KEY = "amir_wishlist";
+const CART_KEY = "amir_cart";
 
 export default function ProductCard({ product }) {
   const [isFavorite, setIsFavorite] = useState(false);
-
+  const [isInCart, setIsInCart] = useState(false);
   useEffect(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const checkWishlist = () => {
+      try {
+        const stored = JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]");
 
-      setIsFavorite(stored.includes(product.id));
-    } catch (error) {
-      console.error("Wishlist read error:", error);
-      setIsFavorite(false);
-    }
+        setIsFavorite(stored.includes(product.id));
+      } catch (error) {
+        console.error("Wishlist read error:", error);
+        setIsFavorite(false);
+      }
+    };
+
+    checkWishlist();
+
+    window.addEventListener("wishlistUpdated", checkWishlist);
+
+    return () => {
+      window.removeEventListener("wishlistUpdated", checkWishlist);
+    };
   }, [product.id]);
 
   const toggleWishlist = () => {
     try {
-      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      const stored = JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]");
 
       let updated;
 
@@ -32,7 +44,7 @@ export default function ProductCard({ product }) {
         updated = [...stored, product.id];
       }
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      localStorage.setItem(WISHLIST_KEY, JSON.stringify(updated));
 
       setIsFavorite(updated.includes(product.id));
 
@@ -41,10 +53,68 @@ export default function ProductCard({ product }) {
       console.error("Wishlist update error:", error);
     }
   };
+  useEffect(() => {
+    const checkCart = () => {
+      try {
+        const stored = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+
+        const exists = stored.some((item) => item.id === product.id);
+
+        setIsInCart(exists);
+      } catch (error) {
+        console.error("Cart read error:", error);
+        setIsInCart(false);
+      }
+    };
+
+    checkCart();
+
+    window.addEventListener("cartUpdated", checkCart);
+
+    return () => {
+      window.removeEventListener("cartUpdated", checkCart);
+    };
+  }, [product.id]);
+
+  const addToCart = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+
+      const existingProduct = stored.find((item) => item.id === product.id);
+
+      let updated;
+
+      if (existingProduct) {
+        updated = stored.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                quantity: (item.quantity || 1) + 1,
+              }
+            : item,
+        );
+      } else {
+        updated = [
+          ...stored,
+          {
+            id: product.id,
+            quantity: 1,
+          },
+        ];
+      }
+
+      localStorage.setItem(CART_KEY, JSON.stringify(updated));
+
+      setIsInCart(true);
+
+      window.dispatchEvent(new Event("cartUpdated"));
+    } catch (error) {
+      console.error("Cart update error:", error);
+    }
+  };
 
   return (
     <article className="group">
-      {/* Image */}
       <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-black/[0.04] dark:bg-white/[0.04]">
         <Link href={`/products/${product.slug}`}>
           <img
@@ -55,6 +125,7 @@ export default function ProductCard({ product }) {
         </Link>
 
         {/* Discount */}
+
         {product.discount && (
           <div className="absolute right-4 top-4 rounded-full bg-black px-3 py-1.5 text-[8px] font-medium text-white dark:bg-white dark:text-black">
             {product.discount}%-
@@ -62,6 +133,7 @@ export default function ProductCard({ product }) {
         )}
 
         {/* Wishlist */}
+
         <button
           type="button"
           onClick={toggleWishlist}
@@ -79,16 +151,16 @@ export default function ProductCard({ product }) {
         </button>
 
         {/* Quick Action */}
+
         <Link
           href={`/products/${product.slug}`}
           className="absolute bottom-4 left-4 right-4 flex translate-y-3 items-center justify-between rounded-xl bg-white/90 px-4 py-3 text-[9px] font-medium text-black opacity-0 backdrop-blur-xl transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 dark:bg-black/90 dark:text-white"
         >
           <span>مشاهده محصول</span>
+
           <ArrowUpLeft className="h-3.5 w-3.5" />
         </Link>
       </div>
-
-      {/* Info */}
       <div className="mt-5">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -102,18 +174,28 @@ export default function ProductCard({ product }) {
               </h3>
             </Link>
           </div>
-
-          {/* Add to cart */}
           <button
             type="button"
-            aria-label="افزودن به سبد خرید"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/10 text-black/40 transition-all duration-300 hover:bg-black hover:text-white dark:border-white/10 dark:text-white/40 dark:hover:bg-white dark:hover:text-black"
+            onClick={addToCart}
+            aria-label={
+              isInCart ? "محصول در سبد خرید است" : "افزودن به سبد خرید"
+            }
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+              isInCart
+                ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
+                : "border-black/10 text-black/40 hover:bg-black hover:text-white dark:border-white/10 dark:text-white/40 dark:hover:bg-white dark:hover:text-black"
+            }`}
           >
-            <ShoppingBag className="h-3.5 w-3.5" />
+            {isInCart ? (
+              <Check className="h-3.5 w-3.5" />
+            ) : (
+              <ShoppingBag className="h-3.5 w-3.5" />
+            )}
           </button>
         </div>
 
         {/* Price */}
+
         <div className="mt-4 flex items-center gap-2">
           <span className="text-xs font-medium">
             {product.price.toLocaleString("fa-IR")} تومان
@@ -127,6 +209,7 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Colors */}
+
         {product.colors?.length > 0 && (
           <div className="mt-4 flex items-center gap-1.5">
             {product.colors.map((color) => (
