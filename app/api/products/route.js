@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
+import { connectDB } from "@/app/lib/mongodb";
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-
-  const gender = searchParams.get("gender");
+export async function GET() {
+  await connectDB();
 
   return NextResponse.json({
-    message: "gender API",
-    Gender: gender,
+    message: "MongoDB connected successfully",
   });
 }
