@@ -32,3 +32,23 @@ export async function POST(request) {
     );
   }
 }
+export async function GET() {
+  try {
+    await connectDB();
+
+    const products = await Product.find();
+
+    return NextResponse.json(products);
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        message: "Failed to fetch products",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
