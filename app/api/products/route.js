@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+
 import { connectDB } from "@/app/lib/mongodb";
+
 import Product from "@/app/model/Product";
 import Category from "@/app/model/Category";
 import Brand from "@/app/model/Brand";
@@ -27,6 +29,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Failed to create product",
+        error: error.message,
       },
       {
         status: 500,
@@ -34,6 +37,7 @@ export async function POST(request) {
     );
   }
 }
+
 export async function GET(request) {
   try {
     await connectDB();
@@ -41,6 +45,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
 
     const category = searchParams.get("category");
+    const brand = searchParams.get("brand");
     const gender = searchParams.get("gender");
     const search = searchParams.get("search");
 
@@ -49,41 +54,115 @@ export async function GET(request) {
 
     const sort = searchParams.get("sort");
 
-    const page = Number(searchParams.get("page")) || 1;
-    const limit = Number(searchParams.get("limit")) || 12;
+    let page = Number(searchParams.get("page")) || 1;
+    let limit = Number(searchParams.get("limit")) || 12;
+
+    // Pagination validation
+    if (!Number.isInteger(page) || page < 1) {
+      page = 1;
+    }
+
+    if (!Number.isInteger(limit) || limit < 1 || limit > 100) {
+      limit = 12;
+    }
+
+    // Price validation
+    if (minPrice !== null) {
+      const min = Number(minPrice);
+
+      if (!Number.isFinite(min) || min < 0) {
+        return NextResponse.json(
+          {
+            message: "Invalid minPrice",
+          },
+          {
+            status: 400,
+          },
+        );
+      }
+    }
+
+    if (maxPrice !== null) {
+      const max = Number(maxPrice);
+
+      if (!Number.isFinite(max) || max < 0) {
+        return NextResponse.json(
+          {
+            message: "Invalid maxPrice",
+          },
+          {
+            status: 400,
+          },
+        );
+      }
+    }
+
+    // minPrice must not be greater than maxPrice
+    if (
+      minPrice !== null &&
+      maxPrice !== null &&
+      Number(minPrice) > Number(maxPrice)
+    ) {
+      return NextResponse.json(
+        {
+          message: "minPrice cannot be greater than maxPrice",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
 
     const filter = {};
 
-    const brand = searchParams.get("brand");
-
+    // Brand filter
     if (brand) {
       const brandDoc = await Brand.findOne({
         slug: brand,
       });
 
       if (!brandDoc) {
-        return NextResponse.json([]);
+        return NextResponse.json({
+          products: [],
+          pagination: {
+            page,
+            limit,
+            total: 0,
+            totalPages: 0,
+          },
+        });
       }
 
       filter.brand = brandDoc._id;
     }
 
+    // Category filter
     if (category) {
       const categoryDoc = await Category.findOne({
         slug: category,
       });
 
       if (!categoryDoc) {
-        return NextResponse.json([]);
+        return NextResponse.json({
+          products: [],
+          pagination: {
+            page,
+            limit,
+            total: 0,
+            totalPages: 0,
+          },
+        });
       }
 
       filter.category = categoryDoc._id;
     }
 
+    // Gender filter
     if (gender) {
       filter.gender = gender;
     }
 
+    // Search
     if (search) {
       filter.name = {
         $regex: search,
@@ -91,30 +170,43 @@ export async function GET(request) {
       };
     }
 
-    if (minPrice || maxPrice) {
+    // Price filter
+    if (minPrice !== null || maxPrice !== null) {
       filter.price = {};
 
-      if (minPrice) {
+      if (minPrice !== null) {
         filter.price.$gte = Number(minPrice);
       }
 
-      if (maxPrice) {
+      if (maxPrice !== null) {
         filter.price.$lte = Number(maxPrice);
       }
     }
 
+    // Sorting
     let sortOption = {};
 
     if (sort === "price-asc") {
-      sortOption = { price: 1 };
+      sortOption = {
+        price: 1,
+      };
     }
 
     if (sort === "price-desc") {
-      sortOption = { price: -1 };
+      sortOption = {
+        price: -1,
+      };
     }
 
+    // Total products
+    const total = await Product.countDocuments(filter);
+
+    const totalPages = Math.ceil(total / limit);
+
+    // Pagination
     const skip = (page - 1) * limit;
 
+    // Get products
     const products = await Product.find(filter)
       .populate("category")
       .populate("brand")
@@ -122,7 +214,15 @@ export async function GET(request) {
       .skip(skip)
       .limit(limit);
 
-    return NextResponse.json(products);
+    return NextResponse.json({
+      products,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+      },
+    });
   } catch (error) {
     console.error(error);
 
