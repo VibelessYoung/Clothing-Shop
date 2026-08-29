@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
 import Product from "@/app/model/Product";
+import Category from "@/app/model/Category";
+import Brand from "@/app/model/Brand";
 
 export async function POST(request) {
   try {
@@ -52,8 +54,30 @@ export async function GET(request) {
 
     const filter = {};
 
+    const brand = searchParams.get("brand");
+
+    if (brand) {
+      const brandDoc = await Brand.findOne({
+        slug: brand,
+      });
+
+      if (!brandDoc) {
+        return NextResponse.json([]);
+      }
+
+      filter.brand = brandDoc._id;
+    }
+
     if (category) {
-      filter.category = category;
+      const categoryDoc = await Category.findOne({
+        slug: category,
+      });
+
+      if (!categoryDoc) {
+        return NextResponse.json([]);
+      }
+
+      filter.category = categoryDoc._id;
     }
 
     if (gender) {
@@ -92,6 +116,8 @@ export async function GET(request) {
     const skip = (page - 1) * limit;
 
     const products = await Product.find(filter)
+      .populate("category")
+      .populate("brand")
       .sort(sortOption)
       .skip(skip)
       .limit(limit);
@@ -103,6 +129,7 @@ export async function GET(request) {
     return NextResponse.json(
       {
         message: "Failed to fetch products",
+        error: error.message,
       },
       {
         status: 500,
