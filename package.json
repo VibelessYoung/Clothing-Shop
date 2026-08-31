@@ -10,6 +10,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.33.0",
     "mongoose": "^9.9.4",
     "next": "16.3.1",
