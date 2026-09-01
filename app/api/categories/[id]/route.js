@@ -70,7 +70,6 @@ export async function PATCH(request, { params }) {
     return NextResponse.json(
       {
         message: "Failed to update category",
-        error: error.message,
       },
       {
         status: 500,

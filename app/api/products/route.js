@@ -29,7 +29,6 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Failed to create product",
-        error: error.message,
       },
       {
         status: 500,
@@ -229,7 +228,6 @@ export async function GET(request) {
     return NextResponse.json(
       {
         message: "Failed to fetch products",
-        error: error.message,
       },
       {
         status: 500,

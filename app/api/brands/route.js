@@ -27,7 +27,6 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Failed to create brand",
-        error: error.message,
       },
       {
         status: 500,

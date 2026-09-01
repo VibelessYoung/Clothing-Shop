@@ -67,7 +67,6 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Failed to register user",
-        error: error.message,
       },
       {
         status: 500,

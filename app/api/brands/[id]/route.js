@@ -72,7 +72,6 @@ export async function PATCH(request, { params }) {
     return NextResponse.json(
       {
         message: "Failed to update brand",
-        error: error.message,
       },
       {
         status: 500,

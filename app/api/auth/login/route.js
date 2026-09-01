@@ -61,7 +61,6 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Login failed",
-        error: error.message,
       },
       {
         status: 500,
