@@ -2,37 +2,20 @@ import { NextResponse } from "next/server";
 
 import { connectDB } from "@/app/lib/mongodb";
 import User from "@/app/model/User";
+import { createToken } from "@/app/lib/auth";
 
 import bcrypt from "bcryptjs";
 
 export async function POST(request) {
   try {
-    // Connect to MongoDB
     await connectDB();
 
-    // Get request body
     const body = await request.json();
 
     const { email, password } = body;
 
-    // Validate input
-    if (!email || !password) {
-      return NextResponse.json(
-        {
-          message: "Email and password are required",
-        },
-        {
-          status: 400,
-        },
-      );
-    }
+    const user = await User.findOne({ email });
 
-    // Find user
-    const user = await User.findOne({
-      email,
-    });
-
-    // User not found
     if (!user) {
       return NextResponse.json(
         {
@@ -44,10 +27,8 @@ export async function POST(request) {
       );
     }
 
-    // Compare password with hashed password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-    // Wrong password
     if (!isPasswordCorrect) {
       return NextResponse.json(
         {
@@ -59,27 +40,27 @@ export async function POST(request) {
       );
     }
 
-    // Remove password from response
-    const userResponse = user.toObject();
+    const token = createToken(user._id.toString());
 
-    delete userResponse.password;
+    const response = NextResponse.json({
+      message: "Login successful",
+    });
 
-    // Login successful
-    return NextResponse.json(
-      {
-        message: "Login successful",
-        user: userResponse,
-      },
-      {
-        status: 200,
-      },
-    );
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+
+    return response;
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        message: "Failed to login",
+        message: "Login failed",
         error: error.message,
       },
       {
