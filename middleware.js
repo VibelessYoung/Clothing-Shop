@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
-import { verifyToken } from "@/app/lib/auth";
+import { verifyTokenEdge } from "@/app/lib/auth-edge";
 
-export function middleware(request) {
+export async function middleware(request) {
   console.log("🔥 MIDDLEWARE RUNNING:", request.nextUrl.pathname);
 
   const token = request.cookies.get("token")?.value;
-
-  console.log("🍪 TOKEN:", token);
 
   if (!token) {
     return NextResponse.json(
@@ -15,7 +13,7 @@ export function middleware(request) {
     );
   }
 
-  const decoded = verifyToken(token);
+  const decoded = await verifyTokenEdge(token);
 
   if (!decoded) {
     return NextResponse.json(
