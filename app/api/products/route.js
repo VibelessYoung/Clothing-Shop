@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import { getAdminUser } from "@/app/lib/getUser";
 import { connectDB } from "@/app/lib/mongodb";
 
 import Product from "@/app/model/Product";
@@ -8,6 +8,30 @@ import Brand from "@/app/model/Brand";
 
 export async function POST(request) {
   try {
+    const { user, status } = await getAdminUser(request);
+
+    if (!user) {
+      if (status === 401) {
+        return NextResponse.json(
+          {
+            message: "Unauthorized",
+          },
+          {
+            status: 401,
+          },
+        );
+      }
+
+      return NextResponse.json(
+        {
+          message: "Forbidden - Admin access required",
+        },
+        {
+          status: 403,
+        },
+      );
+    }
+
     await connectDB();
 
     const body = await request.json();
