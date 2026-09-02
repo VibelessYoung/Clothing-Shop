@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { verifyTokenEdge } from "@/app/lib/auth-edge";
 
 export async function middleware(request) {
-  console.log("🔥 MIDDLEWARE RUNNING:", request.nextUrl.pathname);
-
   const token = request.cookies.get("token")?.value;
 
   if (!token) {
