@@ -1,11 +1,22 @@
 import { NextResponse } from "next/server";
-
+import { getAdminUser } from "@/app/lib/getUser";
 import { connectDB } from "@/app/lib/mongodb";
 import Category from "@/app/model/Category";
 
 export async function POST(request) {
   try {
-    await connectDB();
+    const { user, status } = await getAdminUser(request);
+
+    if (!user) {
+      if (status === 401) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      }
+
+      return NextResponse.json(
+        { message: "Forbidden - Admin access required" },
+        { status: 403 },
+      );
+    }
 
     const body = await request.json();
 

@@ -5,7 +5,6 @@ import Brand from "@/app/model/Brand";
 
 export async function POST(request) {
   try {
-    await connectDB();
     const { user, status } = await getAdminUser(request);
 
     if (!user) {
