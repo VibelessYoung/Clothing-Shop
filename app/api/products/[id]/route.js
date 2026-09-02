@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
 import Product from "@/app/model/Product";
+import { getAdminUser } from "@/app/lib/getUser";
 
 export async function GET(request, { params }) {
   try {
@@ -37,7 +38,18 @@ export async function GET(request, { params }) {
 }
 export async function PATCH(request, { params }) {
   try {
-    await connectDB();
+    const { user, status } = await getAdminUser(request);
+
+    if (!user) {
+      if (status === 401) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      }
+
+      return NextResponse.json(
+        { message: "Forbidden - Admin access required" },
+        { status: 403 },
+      );
+    }
 
     const { id } = await params;
 
@@ -78,7 +90,18 @@ export async function PATCH(request, { params }) {
 }
 export async function DELETE(request, { params }) {
   try {
-    await connectDB();
+    const { user, status } = await getAdminUser(request);
+
+    if (!user) {
+      if (status === 401) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      }
+
+      return NextResponse.json(
+        { message: "Forbidden - Admin access required" },
+        { status: 403 },
+      );
+    }
 
     const { id } = await params;
 
