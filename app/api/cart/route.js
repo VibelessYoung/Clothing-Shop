@@ -132,3 +132,36 @@ export async function POST(request) {
     );
   }
 }
+export async function GET(request) {
+  try {
+    await connectDB();
+
+    const user = await getAuthenticatedUser(request);
+
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const cart = await Cart.findOne({
+      user: user._id,
+    }).populate("items.product");
+
+    if (!cart) {
+      return NextResponse.json({
+        user: user._id,
+        items: [],
+      });
+    }
+
+    return NextResponse.json(cart);
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        message: "Failed to fetch cart",
+      },
+      { status: 500 },
+    );
+  }
+}
