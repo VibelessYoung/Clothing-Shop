@@ -165,3 +165,45 @@ export async function GET(request) {
     );
   }
 }
+export async function DELETE(request) {
+  try {
+    await connectDB();
+
+    const user = await getAuthenticatedUser(request);
+
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const cart = await Cart.findOne({
+      user: user._id,
+    });
+
+    if (!cart) {
+      return NextResponse.json(
+        {
+          message: "Cart not found",
+        },
+        { status: 404 },
+      );
+    }
+
+    cart.items = [];
+
+    await cart.save();
+
+    return NextResponse.json({
+      message: "Cart cleared successfully",
+      cart,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        message: "Failed to clear cart",
+      },
+      { status: 500 },
+    );
+  }
+}
