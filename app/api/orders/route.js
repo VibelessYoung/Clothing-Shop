@@ -115,3 +115,33 @@ export async function POST(request) {
     );
   }
 }
+export async function GET(request) {
+  try {
+    await connectDB();
+
+    const user = await getAuthenticatedUser(request);
+
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const orders = await Order.find({
+      user: user._id,
+    })
+      .populate("items.product")
+      .sort({ createdAt: -1 });
+
+    return NextResponse.json({
+      orders,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        message: "Failed to fetch orders",
+      },
+      { status: 500 },
+    );
+  }
+}
