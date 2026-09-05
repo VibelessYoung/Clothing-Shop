@@ -120,3 +120,48 @@ export async function PATCH(request, { params }) {
     );
   }
 }
+export async function DELETE(request, { params }) {
+  try {
+    await connectDB();
+
+    const user = await getAuthenticatedUser(request);
+
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+
+    const address = await Address.findOne({
+      _id: id,
+      user: user._id,
+    });
+
+    if (!address) {
+      return NextResponse.json(
+        {
+          message: "Address not found",
+        },
+        { status: 404 },
+      );
+    }
+
+    await Address.deleteOne({
+      _id: id,
+      user: user._id,
+    });
+
+    return NextResponse.json({
+      message: "Address deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        message: "Failed to delete address",
+      },
+      { status: 500 },
+    );
+  }
+}
