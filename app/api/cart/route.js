@@ -58,6 +58,24 @@ export async function POST(request) {
       );
     }
 
+    if (product.stock <= 0) {
+      return NextResponse.json(
+        {
+          message: "Product is out of stock",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (quantity > product.stock) {
+      return NextResponse.json(
+        {
+          message: `Only ${product.stock} item(s) are available`,
+        },
+        { status: 400 },
+      );
+    }
+
     if (!product.sizes.includes(selectedSize)) {
       return NextResponse.json(
         {
@@ -99,7 +117,18 @@ export async function POST(request) {
       );
 
       if (existingItem) {
-        existingItem.quantity += quantity;
+        const newQuantity = existingItem.quantity + quantity;
+
+        if (newQuantity > product.stock) {
+          return NextResponse.json(
+            {
+              message: `Only ${product.stock} item(s) are available`,
+            },
+            { status: 400 },
+          );
+        }
+
+        existingItem.quantity = newQuantity;
       } else {
         cart.items.push({
           product: product._id,
