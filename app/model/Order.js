@@ -50,6 +50,48 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
+    shippingAddress: {
+      fullName: {
+        type: String,
+        required: true,
+      },
+
+      phone: {
+        type: String,
+        required: true,
+      },
+
+      province: {
+        type: String,
+        required: true,
+      },
+
+      city: {
+        type: String,
+        required: true,
+      },
+
+      address: {
+        type: String,
+        required: true,
+      },
+
+      postalCode: {
+        type: String,
+        required: true,
+      },
+
+      plaque: {
+        type: String,
+        default: "",
+      },
+
+      unit: {
+        type: String,
+        default: "",
+      },
+    },
+
     items: {
       type: [orderItemSchema],
       required: true,
