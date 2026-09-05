@@ -125,22 +125,7 @@ export async function PATCH(request, { params }) {
       );
     }
 
-    const updates = {};
-
-    if (newStatus !== undefined) {
-      updates.status = newStatus;
-    }
-
-    if (paymentStatus !== undefined) {
-      updates.paymentStatus = paymentStatus;
-    }
-
-    const order = await Order.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    })
-      .populate("user", "_id name lastName email")
-      .populate("items.product");
+    const order = await Order.findById(id);
 
     if (!order) {
       return NextResponse.json(
@@ -151,9 +136,65 @@ export async function PATCH(request, { params }) {
       );
     }
 
+    if (newStatus !== undefined && newStatus !== order.status) {
+      const allowedTransitions = {
+        pending: ["processing", "cancelled"],
+        processing: ["shipped", "cancelled"],
+        shipped: ["delivered"],
+        delivered: [],
+        cancelled: [],
+      };
+
+      const allowedNextStatuses = allowedTransitions[order.status];
+
+      if (!allowedNextStatuses.includes(newStatus)) {
+        return NextResponse.json(
+          {
+            message: `Cannot change order status from ${order.status} to ${newStatus}`,
+          },
+          { status: 400 },
+        );
+      }
+    }
+
+    if (paymentStatus === "refunded" && order.paymentStatus !== "paid") {
+      return NextResponse.json(
+        {
+          message: "Order must be paid before it can be refunded",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (paymentStatus === "paid" && order.paymentStatus === "refunded") {
+      return NextResponse.json(
+        {
+          message: "A refunded payment cannot be changed back to paid",
+        },
+        { status: 400 },
+      );
+    }
+
+    const updates = {};
+
+    if (newStatus !== undefined) {
+      updates.status = newStatus;
+    }
+
+    if (paymentStatus !== undefined) {
+      updates.paymentStatus = paymentStatus;
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    })
+      .populate("user", "_id name lastName email")
+      .populate("items.product");
+
     return NextResponse.json({
       message: "Order updated successfully",
-      order,
+      order: updatedOrder,
     });
   } catch (error) {
     console.error(error);
