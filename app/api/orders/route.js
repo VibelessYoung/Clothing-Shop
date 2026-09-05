@@ -6,6 +6,7 @@ import { getAuthenticatedUser } from "@/app/lib/getUser";
 import Cart from "@/app/model/Cart";
 import Order from "@/app/model/Order";
 import Product from "@/app/model/Product";
+import Address from "@/app/model/Address";
 
 export async function POST(request) {
   try {
@@ -15,6 +16,33 @@ export async function POST(request) {
 
     if (!user) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+
+    const { addressId } = body;
+
+    if (!addressId) {
+      return NextResponse.json(
+        {
+          message: "addressId is required",
+        },
+        { status: 400 },
+      );
+    }
+
+    const address = await Address.findOne({
+      _id: addressId,
+      user: user._id,
+    });
+
+    if (!address) {
+      return NextResponse.json(
+        {
+          message: "Address not found",
+        },
+        { status: 404 },
+      );
     }
 
     const cart = await Cart.findOne({
@@ -31,7 +59,6 @@ export async function POST(request) {
     }
 
     const orderItems = [];
-
     let totalAmount = 0;
 
     for (const item of cart.items) {
@@ -89,6 +116,18 @@ export async function POST(request) {
 
     const order = await Order.create({
       user: user._id,
+
+      shippingAddress: {
+        fullName: address.fullName,
+        phone: address.phone,
+        province: address.province,
+        city: address.city,
+        address: address.address,
+        postalCode: address.postalCode,
+        plaque: address.plaque,
+        unit: address.unit,
+      },
+
       items: orderItems,
       totalAmount,
     });
@@ -115,6 +154,7 @@ export async function POST(request) {
     );
   }
 }
+
 export async function GET(request) {
   try {
     await connectDB();
